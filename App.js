@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
 import {
   Alert,
+  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -51,15 +52,45 @@ export default class App extends Component {
     const { storedValue, text } = this.state;
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.preview}>{storedValue}</Text>
         <View>
-          <TextInput
-            style={styles.input}
+          <Picker
+            style={styles.picker}
+            selectedValue={this.state.storedValue}
+            onValueChange={this.onChangeText}
             onChangeText={this.onChange}
             value={text}
-            placeholder="Type something here..."
-          />
+            placeHolder="Type Somthing Here..."
+          >
+            <Picker.Item label="1 Star" value="oneStar" />
+            <Picker.Item label="2 Stars" value="twoStars" />
+            <Picker.Item label="3 Stars" value="threeStars" />
+            <Picker.Item label="4 Stars" value="fourStars" />
+            <Picker.Item label="5 Stars" value="fiveStars" />
+          </Picker>
+          <Picker
+            style={styles.picker}
+            selectedValue={this.state.storedValue}
+            onValueChange={this.onChangeText}
+          >
+            <Picker.Item label="1 Star" value="oneStar" />
+            <Picker.Item label="2 Stars" value="twoStars" />
+            <Picker.Item label="3 Stars" value="threeStars" />
+            <Picker.Item label="4 Stars" value="fourStars" />
+            <Picker.Item label="5 Stars" value="fiveStars" />
+          </Picker>
+          <Picker
+            style={styles.picker}
+            selectedValue={this.state.storedValue}
+            onValueChange={this.onChangeText}
+          >
+            <Picker.Item label="1 Star" value="oneStar" />
+            <Picker.Item label="2 Stars" value="twoStars" />
+            <Picker.Item label="3 Stars" value="threeStars" />
+            <Picker.Item label="4 Stars" value="fourStars" />
+            <Picker.Item label="5 Stars" value="fiveStars" />
+          </Picker>
           <TouchableOpacity onPress={this.onSave} style={styles.button}>
             <Text>Save locally</Text>
           </TouchableOpacity>
@@ -67,7 +98,7 @@ export default class App extends Component {
             <Text>Load data</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -100,5 +131,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 3,
     marginTop: 10,
+  },
+  picker: {
+    width: 200,
+    margin: 1,
   },
 });
