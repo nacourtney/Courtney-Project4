@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Picker } from "@react-native-picker/picker";
+
 import RNPickerSelect from "react-native-picker-select";
 
 const key = "@MyApp:key";
@@ -50,12 +50,31 @@ export default class App extends Component {
     this.setState({ text });
   };
 
+  setValue = (value, number) => {
+    if (number === 1) {
+      this.state.storedValueFirstPicker === value;
+    }
+    if (number === 2) {
+      this.state.storedValueSecondPicker === value;
+    } else {
+      this.state.storedValueThirdPicker === value;
+    }
+  };
+
   render() {
-    const { storedValue, text } = this.state;
+    const {
+      storedValueFirstPicker,
+      storedValueSecondPicker,
+      storedValueThirdPicker,
+    } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.preview}>{storedValue}</Text>
+        <Text style={styles.preview}>
+          {"First Value: " + storedValueFirstPicker + "\n"}
+          {"Second Value: " + storedValueSecondPicker + "\n"}
+          {"Third Value: " + storedValueThirdPicker + "\n"}
+        </Text>
         <View>
           <RNPickerSelect
             style={pickerStyle}
@@ -63,13 +82,15 @@ export default class App extends Component {
               label: "First Picker",
               value: null,
             }}
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) =>
+              (this.state.storedValueFirstPicker = value)
+            }
             items={[
-              { label: "One Star", value: "OneStar" },
-              { label: "Two Stars", value: "TwoStars" },
-              { label: "Three Stars", value: "ThreeStars" },
-              { label: "Four Stars", value: "FourStars" },
-              { label: "Five Stars", value: "FiveStars" },
+              { label: "One Star", value: "1 Star" },
+              { label: "Two Stars", value: "2 Stars" },
+              { label: "Three Stars", value: "3 Stars" },
+              { label: "Four Stars", value: "4 Stars" },
+              { label: "Five Stars", value: "5 Stars" },
             ]}
           />
           <Text></Text>
@@ -79,13 +100,15 @@ export default class App extends Component {
               label: "Second Picker",
               value: null,
             }}
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) =>
+              (this.state.storedValueSecondPicker = value)
+            }
             items={[
-              { label: "One Star", value: "OneStar" },
-              { label: "Two Stars", value: "TwoStars" },
-              { label: "Three Stars", value: "ThreeStars" },
-              { label: "Four Stars", value: "FourStars" },
-              { label: "Five Stars", value: "FiveStars" },
+              { label: "One Star", value: "1 Star" },
+              { label: "Two Stars", value: "2 Stars" },
+              { label: "Three Stars", value: "3 Stars" },
+              { label: "Four Stars", value: "4 Stars" },
+              { label: "Five Stars", value: "5 Stars" },
             ]}
           />
           <Text></Text>
@@ -95,13 +118,15 @@ export default class App extends Component {
               label: "Third Picker",
               value: null,
             }}
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) =>
+              (this.state.storedValueThirdPicker = value)
+            }
             items={[
-              { label: "One Star", value: "OneStar" },
-              { label: "Two Stars", value: "TwoStars" },
-              { label: "Three Stars", value: "ThreeStars" },
-              { label: "Four Stars", value: "FourStars" },
-              { label: "Five Stars", value: "FiveStars" },
+              { label: "One Star", value: "1 Star" },
+              { label: "Two Stars", value: "2 Stars" },
+              { label: "Three Stars", value: "3 Stars" },
+              { label: "Four Stars", value: "4 Stars" },
+              { label: "Five Stars", value: "5 Stars" },
             ]}
           />
 
