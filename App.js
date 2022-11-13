@@ -48,6 +48,7 @@ export default class App extends Component {
     volume: 1.0,
     currentTrackIndex: 0,
     isBuffering: false,
+    songIndex: 0,
   };
 
   componentWillMount() {
@@ -178,11 +179,16 @@ export default class App extends Component {
     ) : null;
   }
 
+  setSongIndex(currentTrack) {
+    this.state.songIndex = currentTrack;
+  }
+
   render() {
     const {
       storedValueFirstPicker,
       storedValueSecondPicker,
       storedValueThirdPicker,
+      currentTrackIndex,
     } = this.state;
 
     return (
@@ -213,7 +219,10 @@ export default class App extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.control}
-              onPress={this.handleNextTrack}
+              onPress={() => {
+                this.handleNextTrack();
+                this.setSongIndex(currentTrackIndex);
+              }}
             >
               <Feather name="skip-forward" size={32} color="#fff" />
             </TouchableOpacity>
@@ -225,16 +234,25 @@ export default class App extends Component {
           {"Hunted By A Freak Rating: " + storedValueSecondPicker + "\n"}
           {"Nervous Tic Rating: " + storedValueThirdPicker + "\n"}
         </Text>
+
         <View>
           <RNPickerSelect
             style={pickerStyle}
             placeholder={{
-              label: "People Watching",
+              label: "Choose Rating",
               value: null,
             }}
-            onValueChange={(value) =>
-              (this.state.storedValueFirstPicker = value)
-            }
+            onValueChange={(value) => {
+              if (this.state.songIndex === 0) {
+                this.state.storedValueFirstPicker = value;
+              }
+              if (this.state.songIndex === 1) {
+                this.state.storedValueSecondPicker = value;
+              }
+              if (this.state.songIndex === 2) {
+                this.state.storedValueThirdPicker = value;
+              }
+            }}
             items={[
               { label: "One Star", value: "1 Star" },
               { label: "Two Stars", value: "2 Stars" },
@@ -244,41 +262,6 @@ export default class App extends Component {
             ]}
           />
           <Text></Text>
-          <RNPickerSelect
-            style={pickerStyle}
-            placeholder={{
-              label: "Hunted By A Freak",
-              value: null,
-            }}
-            onValueChange={(value) =>
-              (this.state.storedValueSecondPicker = value)
-            }
-            items={[
-              { label: "One Star", value: "1 Star" },
-              { label: "Two Stars", value: "2 Stars" },
-              { label: "Three Stars", value: "3 Stars" },
-              { label: "Four Stars", value: "4 Stars" },
-              { label: "Five Stars", value: "5 Stars" },
-            ]}
-          />
-          <Text></Text>
-          <RNPickerSelect
-            style={pickerStyle}
-            placeholder={{
-              label: "Nervous Tic",
-              value: null,
-            }}
-            onValueChange={(value) =>
-              (this.state.storedValueThirdPicker = value)
-            }
-            items={[
-              { label: "One Star", value: "1 Star" },
-              { label: "Two Stars", value: "2 Stars" },
-              { label: "Three Stars", value: "3 Stars" },
-              { label: "Four Stars", value: "4 Stars" },
-              { label: "Five Stars", value: "5 Stars" },
-            ]}
-          />
 
           <TouchableOpacity onPress={this.onSave} style={styles.button}>
             <Text>Save locally</Text>
@@ -343,7 +326,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   input: {
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "blue",
     borderRadius: 3,
     width: 300,
     height: 40,
